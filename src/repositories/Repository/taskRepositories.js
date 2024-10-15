@@ -268,20 +268,49 @@ export const taskRepository = {
         try {
             const { userId, taskId, message } = data;
 
-          
+
             const newNotification = await Notification.create({
                 userId: new mongoose.Types.ObjectId(userId),
                 taskId: new mongoose.Types.ObjectId(taskId),
                 message: message,
-                readBy: [], 
+                readBy: [],
             });
-    
+
             console.log("Notification created:", newNotification);
             return newNotification;
-    
+
         } catch (error) {
             console.error(error);
 
+        }
+    },
+    mytasks: async (user) => {
+        try {
+
+            const tasks = await Task.find({ owner: user });
+
+
+
+            return tasks;
+        } catch (error) {
+            console.error(error);
+            throw new Error('Error fetching tasks');
+        }
+    },
+    deleteTask:async(data) =>{
+        try {
+  
+            const result = await Task.findByIdAndDelete(data);
+
+            if (!result) {
+                throw new Error('Task not found');
+            }
+    
+            return 
+            
+        } catch (error) {
+            console.error(error);
+            throw new Error('Error deleteTask');
         }
     }
 

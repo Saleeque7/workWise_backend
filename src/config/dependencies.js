@@ -17,7 +17,9 @@ import {
     removeMemberUsecase,
     editTaskUsecase,
     browseDataUsecase,
-    notificationUsecase
+    notificationUsecase,
+    mytaskUsecase,
+    deleteTaskUsecase
 
 } from "../usecases/index.js";
 
@@ -38,7 +40,9 @@ const use_case = {
     removeMemberUsecase,
     editTaskUsecase,
     browseDataUsecase,
-    notificationUsecase
+    notificationUsecase,
+    mytaskUsecase,
+    deleteTaskUsecase
 }
 
 export default { use_case , repositories , config }

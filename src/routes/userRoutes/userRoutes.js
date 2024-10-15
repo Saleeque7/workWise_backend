@@ -12,7 +12,9 @@ export default (dependencies) => {
         removeMemberController,
         editTaskController,
         browseDataController,
-        notificationController
+        notificationController,
+        mytaskController,
+        deleteTaskController
     } = taskController(dependencies)
     const router = express.Router()
 
@@ -25,5 +27,8 @@ export default (dependencies) => {
     router.put('/editTask', verifyToken, editTaskController)
     router.get('/browseData', verifyToken, browseDataController)
     router.post('/notification', verifyToken, notificationController)
+    router.get('/mytask', verifyToken, mytaskController)
+    router.delete('/deleteTask', verifyToken, deleteTaskController);
+
     return router
 }

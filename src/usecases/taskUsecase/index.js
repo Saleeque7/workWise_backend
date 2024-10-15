@@ -7,7 +7,8 @@ import { removeMemberUsecase } from "./removeMemberUsecase.js";
 import { editTaskUsecase } from "./editTaskUsecase.js";
 import { browseDataUsecase } from "./browseDataUsecase.js";
 import { notificationUsecase } from "./notificationUsecase.js";
-
+import { mytaskUsecase } from "./mytaskUsecase.js";
+import { deleteTaskUsecase } from "./deleteTaskUsecase.js";
 
 export {
     addtaskUsecase,
@@ -18,5 +19,7 @@ export {
     removeMemberUsecase ,
     editTaskUsecase ,
     browseDataUsecase,
-    notificationUsecase
+    notificationUsecase,
+    mytaskUsecase,
+    deleteTaskUsecase
 }
