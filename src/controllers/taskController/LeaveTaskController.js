@@ -3,7 +3,7 @@ export default (dependencies) => {
         const {use_case : {leavetaskUsecase }} = dependencies
         try {
        
-            const { id} = req.body
+            const { id} = req.params
             const user = req.userId
             const {executeFunction } = await leavetaskUsecase(dependencies)
             const result  = await executeFunction( id , user)

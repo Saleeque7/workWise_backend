@@ -2,7 +2,12 @@ export default (dependencies)=>{
     const { use_case : { editTaskUsecase }} = dependencies
     const editTaskController = async(req,res) =>{
         try {
-            const TaskData = req.body
+            const { taskId } = req.params
+            const { task } = req.body
+            const TaskData = {
+                taskId,
+                task
+            }
             const { executeFuction }  = await editTaskUsecase(dependencies)
             const result = await executeFuction(TaskData)
 

@@ -2,8 +2,7 @@ export default (dependencies)=>{
     const joinTaskController =async(req,res) => {
         const {use_case : {jointaskUsecase }} = dependencies
         try {
-            console.log(req.body,"body");
-            const { id} = req.body
+            const { id} = req.params
             const user = req.userId
             const {executeFunction } = await jointaskUsecase(dependencies)
             const result  = await executeFunction( id , user)

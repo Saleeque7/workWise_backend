@@ -2,7 +2,7 @@ export default (dependencies) => {
     const { use_case: { removeMemberUsecase } } = dependencies
     const removeMemberController = async (req, res) => {
         try {
-            const data = req.body
+            const data = req.params
             const user = req.userId
             const { executeFunction } = await removeMemberUsecase(dependencies)
             const result = await executeFunction(data, user)

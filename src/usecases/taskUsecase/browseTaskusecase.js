@@ -3,9 +3,11 @@ export const browseTaskusecase = (dependencies)=>{
 
     const executeFunction = async(page , limit , action , user) =>{
         try {
+            console.log(action ,"action what");
+            
        
 
-            if(action === 'AllTask'){
+            if(action === 'ALL TASKS'){
 
                 const skip = (page - 1) * limit;
                 const { tasks , total , memberStatusEnum}  = await browseTask(skip ,limit)
@@ -17,7 +19,9 @@ export const browseTaskusecase = (dependencies)=>{
                     totalPages,
                     memberStatusEnum
                 }
-            }else if (action === 'progress'){
+            }else if (action === 'IN-PROGRESS'){
+                console.log(action ,"action");
+                
                 const skip = (page - 1) * limit;
                 const { tasks , total , memberStatusEnum}  = await browseProgressTask(skip ,limit , user)
     
@@ -29,7 +33,7 @@ export const browseTaskusecase = (dependencies)=>{
                     memberStatusEnum
                 }
                 
-            }else if(action === 'completed'){
+            }else if(action === 'COMPLETED'){
                 const skip = (page - 1) * limit;
                 const { tasks , total , memberStatusEnum}  = await browseCompletedTask(skip ,limit , user)
     

@@ -2,10 +2,10 @@ export default (dependencies)=>{
     const browseTaskController = async(req,res)=>{
         const {use_case : { browseTaskusecase }} = dependencies
         try {
-            const { page , limit , action  } = req.query
+            const { page , limit , activeTab  } = req.query
             const user = req.userId
             const { executeFunction } = await browseTaskusecase(dependencies)
-            const { tasks ,totalPages ,memberStatusEnum} = await executeFunction(page,limit ,action ,user)
+            const { tasks ,totalPages ,memberStatusEnum} = await executeFunction(page,limit ,activeTab ,user)
 
             if(!tasks || !totalPages){
                 return res.status(400).json({message:"failed to load tasks"})

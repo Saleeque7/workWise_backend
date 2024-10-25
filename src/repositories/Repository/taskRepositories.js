@@ -163,7 +163,7 @@ export const taskRepository = {
     },
     editTaskStatus: async (data, user) => {
         try {
-            const { taskId, statuses } = data;
+            const { id, statuses } = data;
 
             console.log(data, "data");
             console.log(user, "user");
@@ -171,7 +171,7 @@ export const taskRepository = {
             for (let { memberId, status } of statuses) {
 
                 await Task.findOneAndUpdate(
-                    { _id: taskId, "members.member": user },
+                    { _id: id, "members.member": user },
                     { $set: { "members.$.memberStatus": status } },
                     { new: true }
                 );

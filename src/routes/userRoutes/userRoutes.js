@@ -18,17 +18,17 @@ export default (dependencies) => {
     } = taskController(dependencies)
     const router = express.Router()
 
-    router.post('/addTask', verifyToken, addTaskController)
-    router.get('/browseTask', verifyToken, browseTaskController)
-    router.put('/joinTask', verifyToken, joinTaskController)
-    router.put('/leaveTask', verifyToken, LeaveTaskController)
-    router.put('/editTaskStatus', verifyToken, editTaskStatusController)
-    router.put('/removeMember', verifyToken, removeMemberController)
-    router.put('/editTask', verifyToken, editTaskController)
+    router.post('/task', verifyToken, addTaskController)
+    router.get('/task', verifyToken, browseTaskController)
+    router.put('/task/join/:id', verifyToken, joinTaskController)
+    router.put('/task/leave/:id', verifyToken, LeaveTaskController)
+    router.put('/task/editStatus/:id', verifyToken, editTaskStatusController)
+    router.put('/task/remove/:taskId/:memberId', verifyToken, removeMemberController)
+    router.put('/task/edit/:taskId', verifyToken, editTaskController)
     router.get('/browseData', verifyToken, browseDataController)
     router.post('/notification', verifyToken, notificationController)
-    router.get('/mytask', verifyToken, mytaskController)
-    router.delete('/deleteTask', verifyToken, deleteTaskController);
+    router.get('/task/my_task', verifyToken, mytaskController)
+    router.delete('/task', verifyToken, deleteTaskController);
 
     return router
 }

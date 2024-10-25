@@ -2,7 +2,12 @@ export default (dependencies)=>{
     const {use_case : { editTaskStatususecase }} = dependencies
     const editTaskStatusController = async(req,res) => {
         try {
-           const updatedata = req.body
+            const { id } = req.params
+           const { statuses } = req.body
+           const updatedata = {
+            id,
+            statuses
+           }    
            const user = req.userId
            const { executeFunction } = await editTaskStatususecase(dependencies)
            const result  = await executeFunction(updatedata , user)
