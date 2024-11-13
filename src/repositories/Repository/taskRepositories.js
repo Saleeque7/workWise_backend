@@ -62,16 +62,18 @@ export const taskRepository = {
                 .skip(skip)
                 .limit(limit)
                 .exec();
+                console.log(tasks,"???");
+                
     
             const total = await Task.countDocuments(query);
         
             const memberStatusEnum = Task.schema.path('members.memberStatus').enumValues;
     
-            const totalPages = Math.ceil(total / limit);
+            const totalPage = Math.ceil(total / limit);
     
             return {
                 tasks,
-                totalPages,
+                totalPage,
                 memberStatusEnum
             };
         } catch (error) {

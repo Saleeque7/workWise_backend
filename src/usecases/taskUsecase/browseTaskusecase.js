@@ -5,10 +5,10 @@ export const browseTaskusecase = (dependencies)=>{
         try {
        
             const skip = (page - 1) * limit;
-            const { tasks , total , memberStatusEnum}  = await browseTasks(skip ,limit ,action, user)
+            const { tasks , totalPage , memberStatusEnum}  = await browseTasks(skip ,limit ,action, user)
 
     
-            const totalPages = Math.ceil(total/limit)
+            const totalPages = Math.ceil(totalPage/limit)
             return {
                 tasks ,
                 totalPages,
