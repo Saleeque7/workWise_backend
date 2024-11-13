@@ -28,93 +28,58 @@ export const taskRepository = {
             throw new Error("Database error occurred while creating task.");
         }
     },
-    browseTask: async (skip, limit) => {
+
+     browseTasks :async (skip, limit, action, user) => {
         try {
-            const tasks = await Task.find()
-                .populate('owner')
-                .populate('members.member')
+            let query = {};
+            
+         
+            if (action === 'IN-PROGRESS') {
+                query = {
+                    members: {
+                        $elemMatch: {
+                            member: user,
+                            memberStatus: 'in progress'
+                        }
+                    }
+                };
+            } else if (action === 'COMPLETED') {
+                query = {
+                    members: {
+                        $elemMatch: {
+                            member: user,
+                            memberStatus: 'completed'
+                        }
+                    }
+                };
+            }
+    
+        
+            const tasks = await Task.find(query)
+                .populate('owner', 'username email')
+                .populate('members.member', 'username email')
                 .sort({ createdAt: -1 })
                 .skip(skip)
-                .limit(limit);
-            const total = await Task.countDocuments();
+                .limit(limit)
+                .exec();
+    
+            const total = await Task.countDocuments(query);
+        
             const memberStatusEnum = Task.schema.path('members.memberStatus').enumValues;
-
+    
+            const totalPages = Math.ceil(total / limit);
+    
             return {
                 tasks,
-                total,
+                totalPages,
                 memberStatusEnum
-            }
+            };
         } catch (error) {
-            console.error("Error in browse task:", error.message);
-            throw new Error("Database error occurred while browse task.");
+            console.error("Error in browseTasks:", error.message);
+            throw new Error("Database error occurred while browsing tasks.");
         }
     },
-    browseProgressTask: async (skip, limit, user) => {
-        try {
-            const tasks = await Task.find({
-                members: {
-                    $elemMatch: {
-                        member: user,
-                        memberStatus: 'in progress'
-                    }
-                }
-            })
-                .sort({ createdAt: -1 })
-                .skip(skip)
-                .limit(limit)
-                .populate("owner", "username email")
-                .populate("members.member", "username email")
-                .exec();
-
-
-            const total = await Task.countDocuments({
-                members: {
-                    $elemMatch: {
-                        member: user,
-                        memberStatus: 'in progress'
-                    }
-                }
-            });
-            const memberStatusEnum = Task.schema.path('members.memberStatus').enumValues;
-            return { tasks, total, memberStatusEnum };
-        } catch (error) {
-            console.error("Error in browse ProgressTask", error.message);
-            throw new Error("Database error occurred while browse ProgressTask.");
-        }
-    },
-    browseCompletedTask: async (skip, limit, user) => {
-        try {
-            const tasks = await Task.find({
-                members: {
-                    $elemMatch: {
-                        member: user,
-                        memberStatus: 'completed'
-                    }
-                }
-            })
-                .sort({ createdAt: -1 })
-                .skip(skip)
-                .limit(limit)
-                .populate("owner", "username email")
-                .populate("members.member", "username email")
-                .exec();
-
-
-            const total = await Task.countDocuments({
-                members: {
-                    $elemMatch: {
-                        member: user,
-                        memberStatus: 'completed'
-                    }
-                }
-            });
-            const memberStatusEnum = Task.schema.path('members.memberStatus').enumValues;
-            return { tasks, total, memberStatusEnum };
-        } catch (error) {
-            console.error("Error in browse completedTasks", error.message);
-            throw new Error("Database error occurred while browse completedTasks.");
-        }
-    },
+    
     joinTask: async (id, user) => {
         try {
             const task = await Task.findById(id);
