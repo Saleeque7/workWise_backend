@@ -1,11 +1,11 @@
 export const browseTaskusecase = (dependencies)=>{
-    const { repositories : { taskRepository : { browseTask , browseProgressTask , browseCompletedTask }} } = dependencies
+    const { repositories : { taskRepository : { browseTasks }} } = dependencies
 
     const executeFunction = async(page , limit , action , user) =>{
         try {
        
-       
-            const { tasks , total , memberStatusEnum}  = await browseTask(skip ,limit ,action, user)
+            const skip = (page - 1) * limit;
+            const { tasks , total , memberStatusEnum}  = await browseTasks(skip ,limit ,action, user)
 
     
             const totalPages = Math.ceil(total/limit)
