@@ -26,10 +26,11 @@ app.use(cookieParser());
 
 
 app.use(cors({
-    origin: config.BASE_URL,
-    methods: 'GET,POST,PUT,DELETE',
-    credentials: true
-}))
+  origin: config.BASE_URL,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 
 
 app.use('/workwise',routes(dependencies))
